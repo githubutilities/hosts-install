@@ -1,0 +1,21 @@
+#! /usr/bin/env bash
+
+if [ "$#" -ne 1 ]; then
+    echo "hosts-install <hosts-file>"
+    exit
+fi
+
+HOST_FILE=$1
+
+# Ask sudo upfront
+sudo -v
+
+sudo cp $HOST_FILE /etc/hosts
+
+# Fix sudo unable to resolve host prompt
+cat << EOF | sudo tee -a /etc/hosts
+
+# Fix sudo unable to resolve host prompt
+127.0.0.1       $(hostname)
+EOF
+
